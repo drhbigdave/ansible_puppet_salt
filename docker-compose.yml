@@ -1,0 +1,44 @@
+version: '3.6'
+services:
+  ansible:
+    image: myrepo/ansible1
+    build: .
+    networks:
+      - sshtest
+    ports:
+      - "2201:22"
+    volumes:
+      - ./dockershare:/dockershare
+    build:
+      context: ./dockerfiles
+      dockerfile: dockerfileAnsible
+    command: tail -f /dev/null
+  db:
+    image: centos:latest
+    build: .
+    networks:
+      - sshtest
+    ports:
+      - "2202:22"
+    volumes:
+        - ./dockershare:/dockershare
+    build:
+      context: ./dockerfiles
+      dockerfile: dockerfileDb
+    command: tail -f /dev/null
+  web:
+    image: centos:latest
+    build: .
+    networks:
+      - sshtest
+    ports:
+      - "2203:22"
+    volumes:
+        - ./dockershare:/dockershare
+    build:
+      context: ./dockerfiles
+      dockerfile: dockerfileWeb
+    command: tail -f /dev/null
+
+networks:
+  sshtest:
